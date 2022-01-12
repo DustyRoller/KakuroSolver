@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31410.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KakuroSolver", "KakuroSolver\KakuroSolver\KakuroSolver.csproj", "{B04A609A-1174-4E44-9850-E203EC3FFDB8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KakuroSolver", "KakuroSolver\KakuroSolver.csproj", "{A150B3A6-639C-4B50-8565-82B1105270F3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B04A609A-1174-4E44-9850-E203EC3FFDB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B04A609A-1174-4E44-9850-E203EC3FFDB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B04A609A-1174-4E44-9850-E203EC3FFDB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B04A609A-1174-4E44-9850-E203EC3FFDB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A150B3A6-639C-4B50-8565-82B1105270F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A150B3A6-639C-4B50-8565-82B1105270F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A150B3A6-639C-4B50-8565-82B1105270F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A150B3A6-639C-4B50-8565-82B1105270F3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
