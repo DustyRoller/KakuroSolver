@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
 
@@ -61,11 +60,11 @@ namespace KakuroSolver
                     var cell = ParseCell(cellsStr[column]);
                     // Make the column be zero indexed
                     cell.Coordinate = new Coordinate(row, column);
-                    puzzle.Cells.Add(cell);
+                    puzzle.AddCell(cell);
                 }
             }
 
-            puzzle.Sections = ParseSections(puzzle);
+            ParseSections(puzzle);
 
             return puzzle;
         }
@@ -137,10 +136,9 @@ namespace KakuroSolver
         /// <param name="puzzle">The Puzzle to parse the section out of.</param>
         /// <param name="clueCell">The ClueCell that the section originates from.</param>
         /// <param name="cellIndex">The index of where the ClueCell is in the puzzle.</param>
-        /// <returns>A Section object.</returns>
-        private static Section ParseColumnSection(Puzzle puzzle, ClueCell clueCell, int cellIndex)
+        private static void ParseColumnSection(Puzzle puzzle, ClueCell clueCell, int cellIndex)
         {
-            var sectionCells = new List<PuzzleCell>();
+            var section = new Section(clueCell.ColumnClue);
 
             // Find all clue cells in the column until there is a break.
             for (var j = (int)(cellIndex + puzzle.Width); j < (puzzle.Height * puzzle.Width); j += (int)puzzle.Width)
@@ -150,15 +148,15 @@ namespace KakuroSolver
                     break;
                 }
 
-                sectionCells.Add((PuzzleCell)puzzle.Cells[j]);
+                var puzzleCell = (PuzzleCell)puzzle.Cells[j];
+
+                section.PuzzleCells.Add(puzzleCell);
+                // Let the cell know it belongs to this section.
+                puzzleCell.ColumnSection = section;
             }
 
-            return new Section
-            {
-                ClueCell = clueCell,
-                Direction = Section.SectionDirection.Column,
-                PuzzleCells = sectionCells,
-            };
+            // Add the section to the puzzle.
+            puzzle.Sections.Add(section);
         }
 
         /// <summary>
@@ -167,10 +165,9 @@ namespace KakuroSolver
         /// <param name="puzzle">The Puzzle to parse the section out of.</param>
         /// <param name="clueCell">The ClueCell that the section originates from.</param>
         /// <param name="cellIndex">The index of where the ClueCell is in the puzzle.</param>
-        /// <returns>A Section object.</returns>
-        private static Section ParseRowSection(Puzzle puzzle, ClueCell clueCell, int cellIndex)
+        private static void ParseRowSection(Puzzle puzzle, ClueCell clueCell, int cellIndex)
         {
-            var sectionCells = new List<PuzzleCell>();
+            var section = new Section(clueCell.RowClue);
 
             // Find all clue cells in the row until there is a break.
             for (var j = (cellIndex + 1); j < (puzzle.Height * puzzle.Width); ++j)
@@ -180,26 +177,23 @@ namespace KakuroSolver
                     break;
                 }
 
-                sectionCells.Add((PuzzleCell)puzzle.Cells[j]);
+                var puzzleCell = (PuzzleCell)puzzle.Cells[j];
+
+                section.PuzzleCells.Add(puzzleCell);
+                // Let the cell know it belongs to this section.
+                puzzleCell.RowSection = section;
             }
 
-            return new Section
-            {
-                ClueCell = clueCell,
-                Direction = Section.SectionDirection.Row,
-                PuzzleCells = sectionCells,
-            };
+            // Add the section to the puzzle.
+            puzzle.Sections.Add(section);
         }
 
         /// <summary>
         /// Parse out all of the sections from the given puzzle.
         /// </summary>
         /// <param name="puzzle">The Puzzle to parse the sections from.</param>
-        /// <returns>A List of Sections.</returns>
-        private static List<Section> ParseSections(Puzzle puzzle)
+        private static void ParseSections(Puzzle puzzle)
         {
-            var sections = new List<Section>();
-
             // Need to generate segments thats can be solved.
             for (var i = 0; i < puzzle.Cells.Count; ++i)
             {
@@ -208,17 +202,15 @@ namespace KakuroSolver
                     // Depending on which direction clue the cell has determines which way segment will be created.
                     if (clueCell.ColumnClue != 0u)
                     {
-                        sections.Add(ParseColumnSection(puzzle, clueCell, i));
+                        ParseColumnSection(puzzle, clueCell, i);
                     }
 
                     if (clueCell.RowClue != 0u)
                     {
-                        sections.Add(ParseRowSection(puzzle, clueCell, i));
+                        ParseRowSection(puzzle, clueCell, i);
                     }
                 }
             }
-
-            return sections;
         }
 
         /// <summary>

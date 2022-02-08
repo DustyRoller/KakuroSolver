@@ -152,24 +152,6 @@ namespace KakuroSolver.UnitTests
 
             Assert.IsInstanceOfType(puzzle.Cells[24], typeof(PuzzleCell));
             Assert.AreEqual(new Coordinate(4u, 4u), puzzle.Cells[24].Coordinate);
-
-            Assert.AreEqual(8, puzzle.Sections.Count);
-            Assert.AreEqual(2, puzzle.Sections[0].PuzzleCells.Count);
-            Assert.AreEqual(Section.SectionDirection.Column, puzzle.Sections[0].Direction);
-            Assert.AreEqual(3, puzzle.Sections[1].PuzzleCells.Count);
-            Assert.AreEqual(Section.SectionDirection.Column, puzzle.Sections[1].Direction);
-            Assert.AreEqual(2, puzzle.Sections[2].PuzzleCells.Count);
-            Assert.AreEqual(Section.SectionDirection.Row, puzzle.Sections[2].Direction);
-            Assert.AreEqual(3, puzzle.Sections[3].PuzzleCells.Count);
-            Assert.AreEqual(Section.SectionDirection.Column, puzzle.Sections[3].Direction);
-            Assert.AreEqual(3, puzzle.Sections[4].PuzzleCells.Count);
-            Assert.AreEqual(Section.SectionDirection.Row, puzzle.Sections[4].Direction);
-            Assert.AreEqual(2, puzzle.Sections[5].PuzzleCells.Count);
-            Assert.AreEqual(Section.SectionDirection.Column, puzzle.Sections[5].Direction);
-            Assert.AreEqual(3, puzzle.Sections[6].PuzzleCells.Count);
-            Assert.AreEqual(Section.SectionDirection.Row, puzzle.Sections[6].Direction);
-            Assert.AreEqual(2, puzzle.Sections[7].PuzzleCells.Count);
-            Assert.AreEqual(Section.SectionDirection.Row, puzzle.Sections[7].Direction);
         }
     }
 }
