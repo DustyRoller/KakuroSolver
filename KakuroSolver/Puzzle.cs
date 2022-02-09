@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Text;
 
 namespace KakuroSolver
 {
@@ -94,6 +95,32 @@ namespace KakuroSolver
             // Check that all the puzzle cells and sections are solved.
             return numCellsSolved == puzzleCells.Count &&
                    Sections.All(s => s.IsSolved());
+        }
+
+        /// <summary>
+        /// Get a string representation of the current state of the puzzle.
+        /// </summary>
+        /// <returns>String representing the current state of the puzzle.</returns>
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+
+            for (var i = 0; i < cells.Count; ++i)
+            {
+                sb.Append('|');
+
+                if (i != 0 && i % Width == 0)
+                {
+                    sb.AppendLine();
+                    sb.Append('|');
+                }
+
+                sb.Append(cells[i].ToString());
+            }
+
+            sb.Append('|');
+
+            return sb.ToString();
         }
     }
 }
