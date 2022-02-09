@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace KakuroSolver
 {
@@ -74,6 +75,14 @@ namespace KakuroSolver
     /// </summary>
     class BlankCell : Cell
     {
+        /// <summary>
+        /// Get a string representation of the cell.
+        /// </summary>
+        /// <returns>String representing the cell.</returns>
+        public override string ToString()
+        {
+            return "x";
+        }
     }
 
     /// <summary>
@@ -91,6 +100,26 @@ namespace KakuroSolver
         /// Gets and sets the Cell's row clue.
         /// </summary>
         public uint RowClue { get; set; }
+
+        /// <summary>
+        /// Get a string representation of the cell.
+        /// </summary>
+        /// <returns>String representing the cell.</returns>
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            if (ColumnClue != 0u)
+            {
+                sb.Append(ColumnClue);
+            }
+            sb.Append('\\');
+            if (RowClue != 0u)
+            {
+                sb.Append(RowClue);
+            }
+
+            return sb.ToString();
+        }
     }
 
     /// <summary>
@@ -162,6 +191,15 @@ namespace KakuroSolver
                     Value = differences[0];
                 }
             }
+        }
+
+        /// <summary>
+        /// Get a string representation of the current state of the cell.
+        /// </summary>
+        /// <returns>String representing the current state of the cell.</returns>
+        public override string ToString()
+        {
+            return Solved ? Value.ToString() : "-";
         }
 
         private void FindUniqueValue(List<uint> singlePartitionValues, List<List<uint>> multiplePartitionValues)

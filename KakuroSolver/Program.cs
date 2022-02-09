@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace KakuroSolver
 {
@@ -6,7 +7,37 @@ namespace KakuroSolver
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            if (args.Length != 1)
+            {
+                Console.Error.WriteLine("Expected 1 argument - puzzle file name");
+                Environment.Exit(1);
+            }
+
+            var puzzle = Parser.ParsePuzzle(args[0]);
+
+            // Time how long it takes to solve the puzzle.
+            var stopwatch = Stopwatch.StartNew();
+
+            if (puzzle.Solve())
+            {
+                Console.WriteLine("Successfully solved puzzle");
+            }
+            else
+            {
+                Console.WriteLine("Failed to solve puzzle");
+            }
+
+            // Stop the stopwatch.
+            stopwatch.Stop();
+
+            // Print out the puzzle.
+            Console.WriteLine();
+            Console.WriteLine(puzzle.ToString());
+
+            // Print out how long it took to solve the puzzle.
+            Console.WriteLine();
+            var timeTaken = (stopwatch.ElapsedMilliseconds / 1000).ToString("F");
+            Console.WriteLine($"Time taken: {timeTaken}s");
         }
     }
 }
