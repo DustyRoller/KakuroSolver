@@ -1,11 +1,11 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 
 namespace KakuroSolver.UnitTests
 {
-    [TestClass]
+    [TestFixture]
     public class CoordinateUnitTests
     {
-        [TestMethod]
+        [Test]
         public void Coordinate_Equals_ReturnsFalseForNull()
         {
             var coordinate = new Coordinate(5u, 8u);
@@ -13,7 +13,7 @@ namespace KakuroSolver.UnitTests
             Assert.IsFalse(coordinate.Equals(null));
         }
 
-        [TestMethod]
+        [Test]
         public void Coordinate_Equals_ReturnsFalseForNonCoordinateObject()
         {
             var coordinate = new Coordinate(5u, 8u);
@@ -21,7 +21,7 @@ namespace KakuroSolver.UnitTests
             Assert.IsFalse(coordinate.Equals("not a coordinate"));
         }
 
-        [TestMethod]
+        [Test]
         public void Coordinate_Equals_ReturnsFalseForCoordinateWithDifferentValues()
         {
             var coordinate = new Coordinate(5u, 8u);
@@ -31,7 +31,7 @@ namespace KakuroSolver.UnitTests
             Assert.IsFalse(coordinate.Equals(otherCoordinate));
         }
 
-        [TestMethod]
+        [Test]
         public void Coordinate_Equals_ReturnsFalseForCoordinateWithDifferentValue()
         {
             var coordinate = new Coordinate(5u, 8u);
@@ -41,7 +41,7 @@ namespace KakuroSolver.UnitTests
             Assert.IsFalse(coordinate.Equals(otherCoordinate));
         }
 
-        [TestMethod]
+        [Test]
         public void Coordinate_Equals_Successful()
         {
             var coordinate = new Coordinate(5u, 8u);

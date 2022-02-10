@@ -20,12 +20,12 @@ namespace KakuroSolver.Utilities
             // Provide some input validation before calling the recursive function.
             if (maximumValue > 9)
             {
-                throw new ArgumentException("Maximum value cannot be greater than 9");
+                throw new ArgumentException("Maximum value cannot be greater than 9.");
             }
 
             if (maximumValue >= sum)
             {
-                throw new ArgumentException("Maximum value cannot be greater than or equal to sum");
+                throw new ArgumentException("Maximum value cannot be greater than or equal to sum.");
             }
 
             if (minimumValue >= maximumValue)
