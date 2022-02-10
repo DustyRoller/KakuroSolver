@@ -46,7 +46,7 @@ namespace KakuroSolver
                 if (lineWidth != puzzle.Width)
                 {
                     // Create parser exception for this.
-                    throw new ParserException($"Mismatch in row width on row {i}");
+                    throw new ParserException($"Mismatch in row width on row {i}.");
                 }
             }
 
@@ -96,7 +96,7 @@ namespace KakuroSolver
             }
             else
             {
-                throw new ParserException($"Found invalid cell data: {cellStr}");
+                throw new ParserException($"Found invalid cell data: {cellStr}.");
             }
 
             return cell;
@@ -221,18 +221,18 @@ namespace KakuroSolver
         {
             if (!File.Exists(puzzleFilePath))
             {
-                throw new FileNotFoundException("Unable to find puzzle file", puzzleFilePath);
+                throw new FileNotFoundException("Unable to find puzzle file.", puzzleFilePath);
             }
 
             if (Path.GetExtension(puzzleFilePath) != ".txt")
             {
-                throw new ArgumentException("Invalid file type", nameof(puzzleFilePath));
+                throw new ArgumentException("Invalid file type.", nameof(puzzleFilePath));
             }
 
             // Make sure the file actually contains some data.
             if (new FileInfo(puzzleFilePath).Length == 0)
             {
-                throw new ArgumentException("Puzzle file is empty", nameof(puzzleFilePath));
+                throw new ArgumentException("Puzzle file is empty.", nameof(puzzleFilePath));
             }
         }
     }

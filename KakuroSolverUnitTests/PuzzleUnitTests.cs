@@ -1,29 +1,18 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 using System.IO;
 
 namespace KakuroSolver.UnitTests
 {
-    [TestClass]
+    [TestFixture]
     public class PuzzleUnitTests
     {
         private const string TestPuzzleDir = "TestPuzzles";
 
-        [TestMethod]
-        public void Puzzle_Solve_4x4Puzzle()
+        [TestCase("Easy4x4Puzzle.txt")]
+        [TestCase("Easy4x4Puzzle2.txt")]
+        public void Puzzle_Solve_SuccessfullySolvesTestPuzzles(string testPuzzleFileName)
         {
-            var testFile = Path.Combine(TestPuzzleDir, "Easy4x4Puzzle.txt");
-
-            Assert.IsTrue(File.Exists(testFile));
-
-            var puzzle = Parser.ParsePuzzle(testFile);
-
-            Assert.IsTrue(puzzle.Solve());
-        }
-
-        [TestMethod]
-        public void Puzzle_Solve_4x4Puzzle2()
-        {
-            var testFile = Path.Combine(TestPuzzleDir, "Easy4x4Puzzle2.txt");
+            var testFile = Path.Combine(TestPuzzleDir, testPuzzleFileName);
 
             Assert.IsTrue(File.Exists(testFile));
 

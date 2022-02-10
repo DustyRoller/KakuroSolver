@@ -1,13 +1,13 @@
 ﻿using KakuroSolver.Utilities;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System.Linq;
 
 namespace KakuroSolver.UnitTests
 {
-    [TestClass]
+    [TestFixture]
     public class SectionUnitTests
     {
-        [TestMethod]
+        [Test]
         public void Section_CalculatePossibilities_ReturnsEmptyListsIfAllPuzzleCellsSolved()
         {
             var section = new Section(4);
@@ -28,7 +28,7 @@ namespace KakuroSolver.UnitTests
             Assert.AreEqual(0, partitions.Count);
         }
 
-        [TestMethod]
+        [Test]
         public void Section_CalculatePossibilities_ReturnsSinglePartitionListForMagicNumber()
         {
             var section = new Section(4);
@@ -50,7 +50,7 @@ namespace KakuroSolver.UnitTests
             Assert.IsTrue(partitions[0].Contains(3u));
         }
 
-        [TestMethod]
+        [Test]
         public void Section_CalculatePossibilities_ReturnsMultiplePartitionListForValue()
         {
             var sectionClueValue = 9u;
@@ -72,7 +72,7 @@ namespace KakuroSolver.UnitTests
             Assert.IsTrue(partitions.All(p => p.Sum() == sectionClueValue));
         }
 
-        [TestMethod]
+        [Test]
         public void Section_CalculatePossibilities_ReturnsSingleValueIfOnlyOneUnsolvedPuzzleCell()
         {
             var sectionClueValue = 4u;
@@ -95,7 +95,7 @@ namespace KakuroSolver.UnitTests
             Assert.AreEqual(1u, partitions[0][0]);
         }
 
-        [TestMethod]
+        [Test]
         public void Section_CalculatePossibilities_ReturnsMultiplePartitionsWithSolvedPuzzleCell()
         {
             var sectionClueValue = 12u;
@@ -124,7 +124,7 @@ namespace KakuroSolver.UnitTests
             Assert.IsTrue(partitions.All(p => p.Sum() == expectedSectionTotal));
         }
 
-        [TestMethod]
+        [Test]
         public void Section_IsSolved_ReturnsFalseIfNotAllCellsAreSolved()
         {
             var section = new Section(12u);
@@ -147,7 +147,7 @@ namespace KakuroSolver.UnitTests
             Assert.IsFalse(section.IsSolved());
         }
 
-        [TestMethod]
+        [Test]
         public void Section_IsSolved_ReturnsFalseIfSumOfCellsIsNotEqualToClueValue()
         {
             var section = new Section(12u);
@@ -171,7 +171,7 @@ namespace KakuroSolver.UnitTests
             Assert.IsFalse(section.IsSolved());
         }
 
-        [TestMethod]
+        [Test]
         public void Section_IsSolved_ReturnsFalseIfNotAllCellsHaveUniqueValues()
         {
             var section = new Section(12u);
@@ -195,7 +195,7 @@ namespace KakuroSolver.UnitTests
             Assert.IsFalse(section.IsSolved());
         }
 
-        [TestMethod]
+        [Test]
         public void Section_IsSolved_ReturnsTrueForValidCompletedSection()
         {
             var section = new Section(12u);

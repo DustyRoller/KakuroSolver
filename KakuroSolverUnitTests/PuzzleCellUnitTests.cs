@@ -1,13 +1,13 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
+﻿using Moq;
+using NUnit.Framework;
 using System.Collections.Generic;
 
 namespace KakuroSolver.UnitTests
 {
-    [TestClass]
+    [TestFixture]
     public class PuzzleCellUnitTests
     {
-        [TestMethod]
+        [Test]
         public void PuzzleCell_Solve_SolvesValueIfSingleColumnPossibility()
         {
             var columnSection = new Mock<ISection>();
@@ -43,7 +43,7 @@ namespace KakuroSolver.UnitTests
             Assert.AreEqual(columnPossibilities[0][0], puzzleCell.Value);
         }
 
-        [TestMethod]
+        [Test]
         public void PuzzleCell_Solve_SolvesValueIfSingleRowPossibility()
         {
             var columnSection = new Mock<ISection>();
@@ -79,7 +79,7 @@ namespace KakuroSolver.UnitTests
             Assert.AreEqual(rowPossibilities[0][0], puzzleCell.Value);
         }
 
-        [TestMethod]
+        [Test]
         public void PuzzleCell_Solve_SolvesValueIfSingleListOfColumnValuesWithUniqueValue()
         {
             var columnSection = new Mock<ISection>();

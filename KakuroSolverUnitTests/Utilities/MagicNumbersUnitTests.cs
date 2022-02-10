@@ -1,12 +1,12 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 using System.Linq;
 
 namespace KakuroSolver.Utilities.UnitTests
 {
-    [TestClass]
+    [TestFixture]
     public class MagicNumbersUnitTests
     {
-        [TestMethod]
+        [Test]
         public void MagicNumbers_ValidateMagicNumbers()
         {
             // To ensure no typos were made double check that the magic number
