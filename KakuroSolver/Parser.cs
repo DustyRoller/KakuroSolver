@@ -58,8 +58,8 @@ namespace KakuroSolver
                 for (var column = 0u; column < cellsStr.Length; ++column)
                 {
                     var cell = ParseCell(cellsStr[column]);
-                    // Make the column be zero indexed
-                    cell.Coordinate = new Coordinate(row, column);
+                    cell.Coordinate = new Coordinate(column, row);
+
                     puzzle.AddCell(cell);
                 }
             }
@@ -223,10 +223,10 @@ namespace KakuroSolver
             {
                 throw new FileNotFoundException("Unable to find puzzle file.", puzzleFilePath);
             }
-
-            if (Path.GetExtension(puzzleFilePath) != ".txt")
+            const string puzzleFileExtension = ".txt";
+            if (Path.GetExtension(puzzleFilePath) != puzzleFileExtension)
             {
-                throw new ArgumentException("Invalid file type.", nameof(puzzleFilePath));
+                throw new ArgumentException($"Invalid file type, expected {puzzleFileExtension}.", nameof(puzzleFilePath));
             }
 
             // Make sure the file actually contains some data.
