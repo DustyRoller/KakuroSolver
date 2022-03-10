@@ -58,7 +58,7 @@ namespace KakuroSolver.UnitTests
 
             var ex = Assert.Throws<ParserException>(() => Parser.ParsePuzzle(TestPuzzleFileName));
 
-            Assert.AreEqual("Mismatch in row width on row 1.", ex.Message);
+            Assert.AreEqual("Mismatch in row width on row 2.", ex.Message);
 
             File.Delete(TestPuzzleFileName);
         }

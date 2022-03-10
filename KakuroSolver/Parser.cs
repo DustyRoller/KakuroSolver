@@ -46,7 +46,7 @@ namespace KakuroSolver
                 if (lineWidth != puzzle.Width)
                 {
                     // Create parser exception for this.
-                    throw new ParserException($"Mismatch in row width on row {i}.");
+                    throw new ParserException($"Mismatch in row width on row {i + 1}.");
                 }
             }
 
