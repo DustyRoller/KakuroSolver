@@ -44,10 +44,15 @@ namespace KakuroSolver
 
             List<List<uint>> partitions;
 
-            var numSolvedCells = PuzzleCells.Count(pc => pc.Solved == true);
+            var solvedPuzzleCells = PuzzleCells.FindAll(pc => pc.Solved);
+            var numSolvedCells = solvedPuzzleCells.Count;
+            var clueValue = ClueValue - (uint)solvedPuzzleCells.Sum(pc => pc.CellValue);
 
-            var solvedPuzzleCells = PuzzleCells.Where(pc => pc.Solved);
-            var clueValue = ClueValue - (uint)solvedPuzzleCells.Sum(pc => pc.Value);
+            if (clueValue == 0)
+            {
+                // This would only happen if our solving has gone wrong somewhere.
+                throw new KakuroSolverException("Invalid clue value of 0 found");
+            }
 
             // If we only have on cell left then we can figure out what its
             // value will be.
@@ -66,7 +71,7 @@ namespace KakuroSolver
                 // Remove any partitions that contain a solved value.
                 foreach (var solvedPuzzleCell in solvedPuzzleCells)
                 {
-                    partitions.RemoveAll(p => p.Contains(solvedPuzzleCell.Value));
+                    partitions.RemoveAll(p => p.Contains(solvedPuzzleCell.CellValue));
                 }
             }
 
@@ -83,8 +88,29 @@ namespace KakuroSolver
             // their value adds up to the clue value and that they all have
             // unique values.
             return PuzzleCells.All(pc => pc.Solved) &&
-                   PuzzleCells.Sum(pc => pc.Value) == ClueValue &&
-                   PuzzleCells.Select(pc => pc.Value).Distinct().Count() == PuzzleCells.Count;
+                   PuzzleCells.Sum(pc => pc.CellValue) == ClueValue &&
+                   PuzzleCells.Select(pc => pc.CellValue).Distinct().Count() == PuzzleCells.Count;
+        }
+
+        /// <summary>
+        /// Attempt to solve this Section.
+        /// </summary>
+        public void Solve()
+        {
+            // Get the currently unsolved puzzle cells.
+            var unsolvedCells = PuzzleCells.FindAll(pc => !pc.Solved);
+
+            foreach (var puzzleCell in unsolvedCells)
+            {
+                puzzleCell.Solve();
+
+                if (puzzleCell.Solved && PuzzleCells.Any(pc => !pc.Coordinate.Equals(puzzleCell.Coordinate) &&
+                                                               pc.Solved &&
+                                                               pc.CellValue == puzzleCell.CellValue))
+                {
+                    throw new KakuroSolverException($"Value already exists in cell's sections. {puzzleCell.Coordinate}.");
+                }
+            }
         }
     }
 }

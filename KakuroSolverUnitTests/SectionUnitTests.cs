@@ -1,5 +1,7 @@
 ﻿using KakuroSolver.Utilities;
+using Moq;
 using NUnit.Framework;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace KakuroSolver.UnitTests
@@ -10,17 +12,17 @@ namespace KakuroSolver.UnitTests
         [Test]
         public void Section_CalculatePossibilities_ReturnsEmptyListsIfAllPuzzleCellsSolved()
         {
-            var section = new Section(4);
+            var section = new Section(4u);
 
             section.PuzzleCells.Add(new PuzzleCell
             {
-                Coordinate = new Coordinate(0, 0),
-                Value = 1u,
+                CellValue = 1u,
+                Coordinate = new Coordinate(0u, 0u),
             });
             section.PuzzleCells.Add(new PuzzleCell
             {
-                Coordinate = new Coordinate(0, 0),
-                Value  = 1u,
+                CellValue = 1u,
+                Coordinate = new Coordinate(0u, 0u),
             });
 
             var partitions = section.CalculateIntegerPartitions();
@@ -31,15 +33,15 @@ namespace KakuroSolver.UnitTests
         [Test]
         public void Section_CalculatePossibilities_ReturnsSinglePartitionListForMagicNumber()
         {
-            var section = new Section(4);
+            var section = new Section(4u);
 
             section.PuzzleCells.Add(new PuzzleCell
             {
-                Coordinate = new Coordinate(0, 0),
+                Coordinate = new Coordinate(0u, 0u),
             });
             section.PuzzleCells.Add(new PuzzleCell
             {
-                Coordinate = new Coordinate(0, 0),
+                Coordinate = new Coordinate(0u, 0u),
             });
 
             var partitions = section.CalculateIntegerPartitions();
@@ -58,11 +60,11 @@ namespace KakuroSolver.UnitTests
 
             section.PuzzleCells.Add(new PuzzleCell
             {
-                Coordinate = new Coordinate(0, 0),
+                Coordinate = new Coordinate(0u, 0u),
             });
             section.PuzzleCells.Add(new PuzzleCell
             {
-                Coordinate = new Coordinate(0, 0),
+                Coordinate = new Coordinate(0u, 0u),
             });
 
             var partitions = section.CalculateIntegerPartitions();
@@ -80,12 +82,12 @@ namespace KakuroSolver.UnitTests
 
             section.PuzzleCells.Add(new PuzzleCell
             {
-                Coordinate = new Coordinate(0, 0),
-                Value = 3u,
+                CellValue = 3u,
+                Coordinate = new Coordinate(0u, 0u),
             });
             section.PuzzleCells.Add(new PuzzleCell
             {
-                Coordinate = new Coordinate(0, 0),
+                Coordinate = new Coordinate(0u, 0u),
             });
 
             var partitions = section.CalculateIntegerPartitions();
@@ -104,16 +106,16 @@ namespace KakuroSolver.UnitTests
             var solvedPuzzleCellValue = 3u;
             section.PuzzleCells.Add(new PuzzleCell
             {
-                Coordinate = new Coordinate(0, 0),
-                Value = solvedPuzzleCellValue,
+                CellValue = solvedPuzzleCellValue,
+                Coordinate = new Coordinate(0u, 0u),
             });
             section.PuzzleCells.Add(new PuzzleCell
             {
-                Coordinate = new Coordinate(0, 0),
+                Coordinate = new Coordinate(0u, 0u),
             });
             section.PuzzleCells.Add(new PuzzleCell
             {
-                Coordinate = new Coordinate(0, 0),
+                Coordinate = new Coordinate(0u, 0u),
             });
 
             var partitions = section.CalculateIntegerPartitions();
@@ -131,17 +133,17 @@ namespace KakuroSolver.UnitTests
 
             section.PuzzleCells.Add(new PuzzleCell
             {
-                Coordinate = new Coordinate(0, 0),
-                Value = 1u,
+                CellValue = 1u,
+                Coordinate = new Coordinate(0u, 0u),
             });
             section.PuzzleCells.Add(new PuzzleCell
             {
-                Coordinate = new Coordinate(0, 0),
-                Value = 2u,
+                CellValue = 2u,
+                Coordinate = new Coordinate(0u, 0u),
             });
             section.PuzzleCells.Add(new PuzzleCell
             {
-                Coordinate = new Coordinate(0, 0),
+                Coordinate = new Coordinate(0u, 0u),
             });
 
             Assert.IsFalse(section.IsSolved());
@@ -154,18 +156,18 @@ namespace KakuroSolver.UnitTests
 
             section.PuzzleCells.Add(new PuzzleCell
             {
-                Coordinate = new Coordinate(0, 0),
-                Value = 1u,
+                CellValue = 1u,
+                Coordinate = new Coordinate(0u, 0u),
             });
             section.PuzzleCells.Add(new PuzzleCell
             {
-                Coordinate = new Coordinate(0, 0),
-                Value = 2u,
+                CellValue = 2u,
+                Coordinate = new Coordinate(0u, 0u),
             });
             section.PuzzleCells.Add(new PuzzleCell
             {
-                Coordinate = new Coordinate(0, 0),
-                Value = 2u,
+                CellValue = 2u,
+                Coordinate = new Coordinate(0u, 0u),
             });
 
             Assert.IsFalse(section.IsSolved());
@@ -174,22 +176,22 @@ namespace KakuroSolver.UnitTests
         [Test]
         public void Section_IsSolved_ReturnsFalseIfNotAllCellsHaveUniqueValues()
         {
-            var section = new Section(12u);
+            var section = new Section(3u);
 
             section.PuzzleCells.Add(new PuzzleCell
             {
-                Coordinate = new Coordinate(0, 0),
-                Value = 10u,
+                CellValue = 1u,
+                Coordinate = new Coordinate(0u, 0u),
             });
             section.PuzzleCells.Add(new PuzzleCell
             {
-                Coordinate = new Coordinate(0, 0),
-                Value = 1u,
+                CellValue = 1u,
+                Coordinate = new Coordinate(0u, 0u),
             });
             section.PuzzleCells.Add(new PuzzleCell
             {
-                Coordinate = new Coordinate(0, 0),
-                Value = 1u,
+                CellValue = 1u,
+                Coordinate = new Coordinate(0u, 0u),
             });
 
             Assert.IsFalse(section.IsSolved());
@@ -202,21 +204,53 @@ namespace KakuroSolver.UnitTests
 
             section.PuzzleCells.Add(new PuzzleCell
             {
-                Coordinate = new Coordinate(0, 0),
-                Value = 1u,
+                CellValue = 1u,
+                Coordinate = new Coordinate(0u, 0u),
             });
             section.PuzzleCells.Add(new PuzzleCell
             {
-                Coordinate = new Coordinate(0, 0),
-                Value = 2u,
+                CellValue = 2u,
+                Coordinate = new Coordinate(0u, 0u),
             });
             section.PuzzleCells.Add(new PuzzleCell
             {
-                Coordinate = new Coordinate(0, 0),
-                Value = 9u,
+                CellValue = 9u,
+                Coordinate = new Coordinate(0u, 0u),
             });
 
             Assert.IsTrue(section.IsSolved());
+        }
+
+        [Test]
+        public void Section_Solve_ThrowsExceptionIfCellSolvesToAlreadyExistingValue()
+        {
+            var section = new Section(2u);
+
+            var mockSection = new Mock<ISection>();
+
+            var sectionPossibilities = new List<List<uint>>()
+            {
+                new List<uint> { 1u, },
+            };
+
+            mockSection.Setup(ms => ms.CalculateIntegerPartitions())
+                       .Returns(sectionPossibilities);
+
+            section.PuzzleCells.Add(new PuzzleCell
+            {
+                CellValue = 1u,
+                Coordinate = new Coordinate(0u, 0u),
+            });
+            section.PuzzleCells.Add(new PuzzleCell
+            {
+                ColumnSection = mockSection.Object,
+                Coordinate = new Coordinate(1u, 0u),
+                RowSection = mockSection.Object,
+            });
+
+            var ex = Assert.Throws<KakuroSolverException>(() => section.Solve());
+
+            Assert.AreEqual($"Value already exists in cell's sections. {section.PuzzleCells[1].Coordinate}.", ex.Message);
         }
     }
 }

@@ -52,5 +52,14 @@
         {
             return (int)(X ^ Y);
         }
+
+        /// <summary>
+        /// Get a string representation of the Coordinate.
+        /// </summary>
+        /// <returns>The string representation fo the Coordinate.</returns>
+        public override string ToString()
+        {
+            return $"{X},{Y}";
+        }
     }
 }

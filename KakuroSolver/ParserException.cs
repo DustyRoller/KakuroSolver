@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace KakuroSolver
+﻿namespace KakuroSolver
 {
-    class ParserException : Exception
+    class ParserException : KakuroSolverException
     {
         public ParserException(string message) : base(message)
         {
