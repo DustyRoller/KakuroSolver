@@ -24,7 +24,8 @@ namespace KakuroSolver
             }
             else
             {
-                Console.WriteLine("Failed to solve puzzle");
+                Console.WriteLine("Failed to solve puzzle\n");
+                Console.WriteLine($"{puzzle.NumberOfUnsolvedCells} cells remain unsolved");
             }
 
             // Stop the stopwatch.
