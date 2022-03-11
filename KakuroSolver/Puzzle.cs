@@ -14,10 +14,7 @@ namespace KakuroSolver
         /// <summary>
         /// Gets all of the Cells that make up the puzzle.
         /// </summary>
-        public ReadOnlyCollection<Cell> Cells
-        {
-            get => cells.AsReadOnly();
-        }
+        public ReadOnlyCollection<Cell> Cells => cells.AsReadOnly();
 
         /// <summary>
         /// Gets and sets the height of the puzzle by number of Cells.
@@ -25,10 +22,14 @@ namespace KakuroSolver
         public uint Height { get; set; }
 
         /// <summary>
+        /// Gets the number of currently unsolved puzzle cells.
+        /// </summary>
+        public int NumberOfUnsolvedCells => puzzleCells.Where(pc => !pc.Solved).Count();
+
+        /// <summary>
         /// Gets and sets the sections of cells that make up this puzzle.
         /// </summary>
         public List<Section> Sections { get; set; } = new List<Section>();
-
 
         /// <summary>
         /// Gets and sets the width of the puzzle by number of Cells.
