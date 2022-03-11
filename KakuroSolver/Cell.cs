@@ -77,12 +77,24 @@ namespace KakuroSolver
         /// <summary>
         /// Gets if this cell has been solved or not.
         /// </summary>
-        public bool Solved => Value != 0u;
+        public bool Solved => CellValue != 0u;
 
         /// <summary>
-        /// Gets the value of the cell, will be 0 if it hasn't been solved yet.
+        /// Gets and sets the value of the cell, will be 0 if it hasn't been solved yet.
         /// </summary>
-        public uint Value { get; set; } = 0u;
+        public uint CellValue
+        {
+            get => cellValue;
+            set
+            {
+                if (value > 9)
+                {
+                    throw new KakuroSolverException($"Puzzle cell value cannot be greater than 9. {Coordinate}.");
+                }
+
+                cellValue = value;
+            }
+        }
 
         /// <summary>
         /// Gets and Sets the column section that this cell belongs to.
@@ -93,6 +105,8 @@ namespace KakuroSolver
         /// Gets and Sets the row section that this cell belongs to.
         /// </summary>
         public ISection RowSection { get; set; }
+
+        private uint cellValue = 0u;
 
         public void Solve()
         {
@@ -111,11 +125,11 @@ namespace KakuroSolver
             // value then that is our value.
             if (rowPossibilities.Count == 1 && rowPossibilities[0].Count == 1)
             {
-                Value = rowPossibilities[0][0];
+                CellValue = rowPossibilities[0][0];
             }
             else if (columnPossibilities.Count == 1 && columnPossibilities[0].Count == 1)
             {
-                Value = columnPossibilities[0][0];
+                CellValue = columnPossibilities[0][0];
             }
             else if (columnPossibilities.Count == 1 && rowPossibilities.Count != 1)
             {
@@ -134,7 +148,7 @@ namespace KakuroSolver
                 if (differences.Count == 1)
                 {
                     // We have solved our cell.
-                    Value = differences[0];
+                    CellValue = differences[0];
                 }
             }
         }
@@ -145,7 +159,7 @@ namespace KakuroSolver
         /// <returns>String representing the current state of the cell.</returns>
         public override string ToString()
         {
-            return Solved ? Value.ToString() : "-";
+            return Solved ? CellValue.ToString() : "-";
         }
 
         private void FindUniqueValue(List<uint> singlePartitionValues, List<List<uint>> multiplePartitionValues)
@@ -216,7 +230,7 @@ namespace KakuroSolver
             if (uniqueValue)
             {
                 // We have solved our cell.
-                Value = value;
+                CellValue = value;
             }
         }
     }

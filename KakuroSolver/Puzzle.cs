@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
@@ -73,28 +74,41 @@ namespace KakuroSolver
         /// <returns>True if the puzzle was solved, otherwise false.</returns>
         public bool Solve()
         {
-            var numCellsSolved = 0;
-            var updatedSolvedNumber = 0;
+            var solved = false;
 
-            // Loop through each unsolved cell to try and solve the puzzle.
-            // Will keep looping until either no new cells are solved, or all
-            // the cells are solved.
-            do
+            try
             {
-                numCellsSolved = updatedSolvedNumber;
+                var numCellsSolved = 0;
+                var updatedSolvedNumber = 0;
 
-                puzzleCells.Where(pc => pc.Solved == false)
-                           .ToList()
-                           .ForEach(pc => pc.Solve());
+                // Loop through each unsolved section to try and solve the puzzle.
+                // Will keep looping until either no new sections are solved, or all
+                // the sections are solved.
+                do
+                {
+                    numCellsSolved = updatedSolvedNumber;
 
-                updatedSolvedNumber = puzzleCells.Count(pc => pc.Solved == true);
+                    var unsolvedSections = Sections.FindAll(s => !s.IsSolved());
+
+                    Sections.FindAll(s => !s.IsSolved())
+                            .ForEach(s => s.Solve());
+
+                    updatedSolvedNumber = puzzleCells.Count(pc => pc.Solved);
+                }
+                while (updatedSolvedNumber != numCellsSolved
+                       && numCellsSolved != puzzleCells.Count);
+
+                // Check that all the puzzle cells and sections are solved.
+                solved = numCellsSolved == puzzleCells.Count &&
+                         Sections.All(s => s.IsSolved());
             }
-            while (updatedSolvedNumber != numCellsSolved
-                   || numCellsSolved != puzzleCells.Count);
+            catch (KakuroSolverException ex)
+            {
+                Console.Error.WriteLine("Caught exception whilst solving puzzle");
+                Console.Error.WriteLine(ex.ToString());
+            }
 
-            // Check that all the puzzle cells and sections are solved.
-            return numCellsSolved == puzzleCells.Count &&
-                   Sections.All(s => s.IsSolved());
+            return solved;
         }
 
         /// <summary>

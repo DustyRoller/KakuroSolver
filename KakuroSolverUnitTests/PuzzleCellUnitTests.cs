@@ -8,6 +8,19 @@ namespace KakuroSolver.UnitTests
     public class PuzzleCellUnitTests
     {
         [Test]
+        public void PuzzleCell_CellValue_ThrowsExceptionIfValueIsGreaterThan9()
+        {
+            var puzzleCell = new PuzzleCell
+            {
+                Coordinate = new Coordinate(0u, 0u),
+            };
+
+            var ex = Assert.Throws<KakuroSolverException>(() => puzzleCell.CellValue = 10u);
+
+            Assert.AreEqual($"Puzzle cell value cannot be greater than 9. {puzzleCell.Coordinate}.", ex.Message);
+        }
+
+        [Test]
         public void PuzzleCell_Solve_SolvesValueIfSingleColumnPossibility()
         {
             var columnSection = new Mock<ISection>();
@@ -40,7 +53,7 @@ namespace KakuroSolver.UnitTests
             puzzleCell.Solve();
 
             Assert.IsTrue(puzzleCell.Solved);
-            Assert.AreEqual(columnPossibilities[0][0], puzzleCell.Value);
+            Assert.AreEqual(columnPossibilities[0][0], puzzleCell.CellValue);
         }
 
         [Test]
@@ -76,7 +89,7 @@ namespace KakuroSolver.UnitTests
             puzzleCell.Solve();
 
             Assert.IsTrue(puzzleCell.Solved);
-            Assert.AreEqual(rowPossibilities[0][0], puzzleCell.Value);
+            Assert.AreEqual(rowPossibilities[0][0], puzzleCell.CellValue);
         }
 
         [Test]
@@ -113,7 +126,7 @@ namespace KakuroSolver.UnitTests
             puzzleCell.Solve();
 
             Assert.IsTrue(puzzleCell.Solved);
-            Assert.AreEqual(4u, puzzleCell.Value);
+            Assert.AreEqual(4u, puzzleCell.CellValue);
         }
     }
 }
