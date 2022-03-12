@@ -37,7 +37,7 @@ namespace KakuroSolver
 
             // Print out how long it took to solve the puzzle.
             Console.WriteLine();
-            var timeTaken = (stopwatch.ElapsedMilliseconds / 1000).ToString("F");
+            var timeTaken = (stopwatch.ElapsedMilliseconds / 1000.0).ToString("F2");
             Console.WriteLine($"Time taken: {timeTaken}s");
         }
     }
