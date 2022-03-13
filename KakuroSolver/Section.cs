@@ -15,10 +15,25 @@ namespace KakuroSolver
     /// </summary>
     class Section : ISection
     {
+        /// <summary>
+        /// Gets the clue value of this Section.
+        /// </summary>
         public uint ClueValue { get; private set; }
 
+        /// <summary>
+        /// Gets the list of PuzzleCells that make up this section.
+        /// </summary>
         public List<PuzzleCell> PuzzleCells { get; private set; } = new List<PuzzleCell>();
 
+        /// <summary>
+        /// Gets a list of the unsolved PuzzleCells left in this section.
+        /// </summary>
+        public List<PuzzleCell> UnsolvedPuzzleCells => PuzzleCells.Where(pc => !pc.Solved).ToList();
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="clueValue">The clue value of this Section.</param>
         public Section(uint clueValue)
         {
             if (clueValue == 0u)
@@ -97,10 +112,8 @@ namespace KakuroSolver
         /// </summary>
         public void Solve()
         {
-            // Get the currently unsolved puzzle cells.
-            var unsolvedCells = PuzzleCells.FindAll(pc => !pc.Solved);
-
-            foreach (var puzzleCell in unsolvedCells)
+            // Loop through the currently unsolved puzzle cells.
+            foreach (var puzzleCell in UnsolvedPuzzleCells)
             {
                 puzzleCell.Solve();
 
