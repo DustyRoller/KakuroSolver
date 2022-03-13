@@ -252,5 +252,32 @@ namespace KakuroSolver.UnitTests
 
             Assert.AreEqual($"Value already exists in cell's sections. {section.PuzzleCells[1].Coordinate}.", ex.Message);
         }
+
+        [Test]
+        public void Section_UnsolvedPuzzleCells_SuccessfullyReturnsAllCellsAsUnsolved()
+        {
+            var section = new Section(12u);
+
+            section.PuzzleCells.Add(new PuzzleCell());
+            section.PuzzleCells.Add(new PuzzleCell());
+            section.PuzzleCells.Add(new PuzzleCell());
+
+            Assert.AreEqual(3, section.UnsolvedPuzzleCells.Count);
+        }
+
+        [Test]
+        public void Section_UnsolvedPuzzleCells_SuccessfullyReturnsExpectedCellsAsUnsolved()
+        {
+            var section = new Section(12u);
+
+            section.PuzzleCells.Add(new PuzzleCell());
+            section.PuzzleCells.Add(new PuzzleCell
+            {
+                CellValue = 1u,
+            });
+            section.PuzzleCells.Add(new PuzzleCell());
+
+            Assert.AreEqual(2, section.UnsolvedPuzzleCells.Count);
+        }
     }
 }
