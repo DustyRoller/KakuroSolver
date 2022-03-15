@@ -97,6 +97,18 @@ namespace KakuroSolver
         }
 
         /// <summary>
+        /// Gets the possible values for this cell.
+        /// </summary>
+        /// <remarks>
+        /// This calculates the integer partitions for the column and row
+        /// sections that this cell belongs to, and returns all of the common
+        /// values into a single list.
+        /// </remarks>
+        public List<uint> PossibleValues => ColumnSection.CalculateIntegerPartitions().SelectMany(ip => ip)
+                                                            .Intersect(RowSection.CalculateIntegerPartitions().SelectMany(ip => ip))
+                                                            .ToList();
+
+        /// <summary>
         /// Gets and Sets the column section that this cell belongs to.
         /// </summary>
         public ISection ColumnSection { get; set; }
