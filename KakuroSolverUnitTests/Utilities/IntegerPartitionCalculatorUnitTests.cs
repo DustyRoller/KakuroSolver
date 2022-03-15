@@ -79,6 +79,24 @@ namespace KakuroSolver.Utilities.UnitTests
         }
 
         [Test]
+        public void IntegerPartitionCalulator_CalculateDistinctIntegerPartitions_RequestSamePartitionTwiceViaCacheReturnsSameResults()
+        {
+            var sum = 7u;
+            var partitionLength = 2u;
+            var minValue = 1u;
+            var maxValue = 5u;
+            var partitions = IntegerPartitionCalculator.CalculateDistinctIntegerPartitions(sum, partitionLength, minValue, maxValue);
+
+            ValidatePartitions(partitions, sum);
+
+            Assert.IsTrue(partitions.All(p => p.All(i => i <= maxValue)));
+
+            var cachedPartitions = IntegerPartitionCalculator.CalculateDistinctIntegerPartitions(sum, 2u, 1u, maxValue);
+
+            CollectionAssert.AreEqual(partitions, cachedPartitions);
+        }
+
+        [Test]
         public void IntegerPartitionCalulator_CalculateDistinctIntegerPartitions_ReturnsAnEmptyListIfUnableToFindPartitions()
         {
             var sum = 11u;
