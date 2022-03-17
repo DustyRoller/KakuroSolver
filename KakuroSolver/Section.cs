@@ -26,11 +26,6 @@ namespace KakuroSolver
         public List<PuzzleCell> PuzzleCells { get; private set; } = new List<PuzzleCell>();
 
         /// <summary>
-        /// Gets a list of the unsolved PuzzleCells left in this section.
-        /// </summary>
-        public List<PuzzleCell> UnsolvedPuzzleCells => PuzzleCells.Where(pc => !pc.Solved).ToList();
-
-        /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="clueValue">The clue value of this Section.</param>
@@ -105,25 +100,6 @@ namespace KakuroSolver
             return PuzzleCells.All(pc => pc.Solved) &&
                    PuzzleCells.Sum(pc => pc.CellValue) == ClueValue &&
                    PuzzleCells.Select(pc => pc.CellValue).Distinct().Count() == PuzzleCells.Count;
-        }
-
-        /// <summary>
-        /// Attempt to solve this Section.
-        /// </summary>
-        public void Solve()
-        {
-            // Loop through the currently unsolved puzzle cells.
-            foreach (var puzzleCell in UnsolvedPuzzleCells)
-            {
-                puzzleCell.Solve();
-
-                if (puzzleCell.Solved && PuzzleCells.Any(pc => !pc.Coordinate.Equals(puzzleCell.Coordinate) &&
-                                                               pc.Solved &&
-                                                               pc.CellValue == puzzleCell.CellValue))
-                {
-                    throw new KakuroSolverException($"Value already exists in cell's sections. {puzzleCell.Coordinate}.");
-                }
-            }
         }
     }
 }

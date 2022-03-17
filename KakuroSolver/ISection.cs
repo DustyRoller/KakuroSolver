@@ -15,11 +15,6 @@ namespace KakuroSolver
         List<PuzzleCell> PuzzleCells { get; }
 
         /// <summary>
-        /// Gets a list of the unsolved PuzzleCells left in this section.
-        /// </summary>
-        List<PuzzleCell> UnsolvedPuzzleCells { get; }
-
-        /// <summary>
         /// Calculate all of the possible integer partitions for this section,
         /// taking into account already solved cells.
         /// </summary>
@@ -31,10 +26,5 @@ namespace KakuroSolver
         /// </summary>
         /// <returns>True if section is solved, otherwise false.</returns>
         bool IsSolved();
-
-        /// <summary>
-        /// Attempt to solve this Section.
-        /// </summary>
-        void Solve();
     }
 }
