@@ -3,7 +3,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace KakuroSolver.UnitTests
+namespace KakuroSolver.Cells.UnitTests
 {
     [TestFixture]
     public class PuzzleCellUnitTests

@@ -4,13 +4,16 @@ using System.Linq;
 
 namespace KakuroSolver.Utilities
 {
-    class IntegerPartitionCalculator
+    /// <summary>
+    /// Class to calculate integer partitions for given number combinations.
+    /// </summary>
+    internal static class IntegerPartitionCalculator
     {
         /// <summary>
         /// As calculating integer partitions can be quite slow, keep a cache
         /// of previously caclulated integer partitions and the known magic numbers.
         /// </summary>
-        private static readonly List<IntegerPartitions> cache = new(MagicNumbers.MagicNumberValues);
+        private static readonly List<IntegerPartitions> Cache = new (MagicNumbers.MagicNumberValues);
 
         /// <summary>
         /// Calculate the distinct integer partitionss for the given set
@@ -44,7 +47,7 @@ namespace KakuroSolver.Utilities
                 throw new ArgumentException("Maximum value must be greater than the minimum value.");
             }
 
-            var integerPartitions = cache.FirstOrDefault(ip => ip.PartitionLength == partitionLength &&
+            var integerPartitions = Cache.FirstOrDefault(ip => ip.PartitionLength == partitionLength &&
                                                                ip.Total == total &&
                                                                ip.Values[0].All(v => v >= minValue && v <= maxValue));
 
@@ -56,7 +59,7 @@ namespace KakuroSolver.Utilities
                 integerPartitions = new IntegerPartitions(total, partitionLength, values);
 
                 // Now add it to the cache for future use.
-                cache.Add(integerPartitions);
+                Cache.Add(integerPartitions);
             }
 
             return integerPartitions.Values;

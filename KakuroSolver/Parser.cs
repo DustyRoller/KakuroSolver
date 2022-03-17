@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KakuroSolver.Cells;
+using System;
 using System.IO;
 using System.Runtime.CompilerServices;
 
@@ -15,9 +16,9 @@ namespace KakuroSolver
     ///   |  \16|  -  |  -  |20\  |  \  |
     ///   |  \23|  -  |  -  |  -  |15\  |
     ///   |  x  |  \23|  -  |  -  |  -  |
-    ///   |  x  |  x  |  \14|  -  |  -  |
+    ///   |  x  |  x  |  \14|  -  |  -  |.
     /// </remarks>
-    class Parser
+    internal static class Parser
     {
         /// <summary>
         /// Parse the given file to generate a Puzzle, ready to be solved.
@@ -35,6 +36,7 @@ namespace KakuroSolver
 
             // Determine the height and width of the puzzle.
             puzzle.Height = (uint)lines.Length;
+
             // Width is minus two because of the starting and trailing '|'.
             puzzle.Width = (uint)lines[0].Split('|').Length - 2;
 
@@ -42,7 +44,7 @@ namespace KakuroSolver
             for (var i = 1u; i < lines.Length; ++i)
             {
                 var lineWidth = (uint)lines[i].Split('|').Length - 2;
-                
+
                 if (lineWidth != puzzle.Width)
                 {
                     // Create parser exception for this.
@@ -118,6 +120,7 @@ namespace KakuroSolver
             {
                 columnClue = uint.Parse(clues[0].Trim());
             }
+
             if (!string.IsNullOrWhiteSpace(clues[1]))
             {
                 rowClue = uint.Parse(clues[1].Trim());
@@ -151,6 +154,7 @@ namespace KakuroSolver
                 var puzzleCell = (PuzzleCell)puzzle.Cells[j];
 
                 section.PuzzleCells.Add(puzzleCell);
+
                 // Let the cell know it belongs to this section.
                 puzzleCell.ColumnSection = section;
             }
@@ -170,7 +174,7 @@ namespace KakuroSolver
             var section = new Section(clueCell.RowClue);
 
             // Find all clue cells in the row until there is a break.
-            for (var j = (cellIndex + 1); j < (puzzle.Height * puzzle.Width); ++j)
+            for (var j = cellIndex + 1; j < (puzzle.Height * puzzle.Width); ++j)
             {
                 if (puzzle.Cells[j] is not PuzzleCell)
                 {
@@ -180,6 +184,7 @@ namespace KakuroSolver
                 var puzzleCell = (PuzzleCell)puzzle.Cells[j];
 
                 section.PuzzleCells.Add(puzzleCell);
+
                 // Let the cell know it belongs to this section.
                 puzzleCell.RowSection = section;
             }
@@ -223,6 +228,7 @@ namespace KakuroSolver
             {
                 throw new FileNotFoundException("Unable to find puzzle file.", puzzleFilePath);
             }
+
             const string puzzleFileExtension = ".txt";
             if (Path.GetExtension(puzzleFilePath) != puzzleFileExtension)
             {

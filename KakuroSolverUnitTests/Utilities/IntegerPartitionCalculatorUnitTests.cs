@@ -128,6 +128,7 @@ namespace KakuroSolver.Utilities.UnitTests
             // unique values and a unique combination of values compared to the
             // rest of the partitions.
             Assert.IsTrue(partitions.All(p => p.Sum() == sum));
+
             // Make sure each partition has unique numbers.
             Assert.IsTrue(partitions.All(p => p.Distinct().Count() == p.Count));
         }

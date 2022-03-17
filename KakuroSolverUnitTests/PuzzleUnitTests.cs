@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using KakuroSolver.Cells;
+using NUnit.Framework;
 using System.IO;
 
 namespace KakuroSolver.UnitTests

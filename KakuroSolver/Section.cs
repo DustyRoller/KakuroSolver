@@ -1,4 +1,5 @@
-﻿using KakuroSolver.Utilities;
+﻿using KakuroSolver.Cells;
+using KakuroSolver.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace KakuroSolver
     /// The sum of the values of the PuzzleCells must add up to the value
     /// of the ClueCell.
     /// </summary>
-    class Section : ISection
+    internal class Section : ISection
     {
         /// <summary>
         /// Gets the clue value of this Section.
@@ -26,7 +27,7 @@ namespace KakuroSolver
         public List<PuzzleCell> PuzzleCells { get; private set; } = new List<PuzzleCell>();
 
         /// <summary>
-        /// Constructor.
+        /// Initializes a new instance of the <see cref="Section"/> class.
         /// </summary>
         /// <param name="clueValue">The clue value of this Section.</param>
         public Section(uint clueValue)
@@ -46,7 +47,7 @@ namespace KakuroSolver
         /// <returns>List of integer partitions.</returns>
         public List<List<uint>> CalculateIntegerPartitions()
         {
-            if (PuzzleCells.All(pc => pc.Solved == true))
+            if (PuzzleCells.All(pc => pc.Solved))
             {
                 // This section is solved so return an empty list.
                 return new List<List<uint>>();

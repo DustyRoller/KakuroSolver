@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KakuroSolver.Cells;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace KakuroSolver
     /// <summary>
     /// Class representing a kakuro puzzle.
     /// </summary>
-    class Puzzle
+    internal class Puzzle
     {
         /// <summary>
         /// Gets all of the Cells that make up the puzzle.
@@ -17,22 +18,22 @@ namespace KakuroSolver
         public ReadOnlyCollection<Cell> Cells => cells.AsReadOnly();
 
         /// <summary>
-        /// Gets and sets the height of the puzzle by number of Cells.
+        /// Gets or sets the height of the puzzle by number of Cells.
         /// </summary>
         public uint Height { get; set; }
 
         /// <summary>
         /// Gets the number of currently unsolved puzzle cells.
         /// </summary>
-        public int NumberOfUnsolvedCells => puzzleCells.Where(pc => !pc.Solved).Count();
+        public int NumberOfUnsolvedCells => puzzleCells.Count(pc => !pc.Solved);
 
         /// <summary>
-        /// Gets and sets the sections of cells that make up this puzzle.
+        /// Gets or sets the sections of cells that make up this puzzle.
         /// </summary>
         public List<Section> Sections { get; set; } = new List<Section>();
 
         /// <summary>
-        /// Gets and sets the width of the puzzle by number of Cells.
+        /// Gets or sets the width of the puzzle by number of Cells.
         /// </summary>
         public uint Width { get; set; }
 
@@ -47,7 +48,7 @@ namespace KakuroSolver
         private readonly List<PuzzleCell> puzzleCells;
 
         /// <summary>
-        /// Constructor.
+        /// Initializes a new instance of the <see cref="Puzzle"/> class.
         /// </summary>
         public Puzzle()
         {
@@ -94,7 +95,7 @@ namespace KakuroSolver
                 var unsolvedCells = puzzleCells.Where(pc => !pc.Solved);
                 if (unsolvedCells.Any())
                 {
-                    RecursivelySolvePuzzle(unsolvedCells.ToList()); ;
+                    RecursivelySolvePuzzle(unsolvedCells.ToList());
                 }
             }
             catch (KakuroSolverException ex)

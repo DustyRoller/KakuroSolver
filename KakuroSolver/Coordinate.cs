@@ -4,7 +4,7 @@
     /// Coordinate of a cell within a puzzle, describing its X and Y position
     /// within the puzzle grid, starting 0, 0 at the top left hand corner.
     /// </summary>
-    class Coordinate
+    internal class Coordinate
     {
         /// <summary>
         /// Gets the Coordinate's X position.
@@ -17,7 +17,7 @@
         public uint Y { get; private set; }
 
         /// <summary>
-        /// Constructor.
+        /// Initializes a new instance of the <see cref="Coordinate"/> class.
         /// </summary>
         /// <param name="x">The X coordinate.</param>
         /// <param name="y">The Y coordinate.</param>

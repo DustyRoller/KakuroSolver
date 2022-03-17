@@ -1,3 +1,4 @@
+using KakuroSolver.Cells;
 using NUnit.Framework;
 using System;
 using System.IO;
@@ -50,6 +51,7 @@ namespace KakuroSolver.UnitTests
         public void Parser_ParsePuzzle_FailsWithPuzzleWithDifferentColumnLengths()
         {
             var sb = new StringBuilder();
+
             // First line has 3 columns, second has 4 columns.
             sb.AppendLine("|  x  |  x  |  x  |");
             sb.AppendLine("|  x  |  x  |  x  |  x  |");
