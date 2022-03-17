@@ -51,8 +51,8 @@ namespace KakuroSolver.UnitTests
         {
             var sb = new StringBuilder();
             // First line has 3 columns, second has 4 columns.
-            sb.AppendLine("|x|x|x|");
-            sb.AppendLine("|x|x|x|x|");
+            sb.AppendLine("|  x  |  x  |  x  |");
+            sb.AppendLine("|  x  |  x  |  x  |  x  |");
 
             File.WriteAllText(TestPuzzleFileName, sb.ToString());
 
@@ -67,8 +67,8 @@ namespace KakuroSolver.UnitTests
         public void Parser_ParsePuzzle_FailsWithPuzzleWithInvalidCharacters()
         {
             var sb = new StringBuilder();
-            sb.AppendLine("|x|x|x|");
-            sb.AppendLine("|x|?|x|");
+            sb.AppendLine("|  x  |  x  |  x  |");
+            sb.AppendLine("|  x  |?|  x  |");
 
             File.WriteAllText(TestPuzzleFileName, sb.ToString());
 
