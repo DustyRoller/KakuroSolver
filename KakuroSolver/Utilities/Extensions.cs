@@ -5,7 +5,7 @@ namespace KakuroSolver.Utilities
     /// <summary>
     /// Extension class to provide useful extension functions.
     /// </summary>
-    static class Extensions
+    internal static class Extensions
     {
         /// <summary>
         /// Calculate the sum of the values within the given IEnumerable.

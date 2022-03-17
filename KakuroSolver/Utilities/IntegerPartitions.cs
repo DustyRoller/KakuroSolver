@@ -2,7 +2,11 @@
 
 namespace KakuroSolver.Utilities
 {
-    class IntegerPartitions
+    /// <summary>
+    /// Class representing an integer partition, used to keep track of
+    /// previously calculated integer partitiions.
+    /// </summary>
+    internal class IntegerPartitions
     {
         /// <summary>
         /// Gets the length of partition.
@@ -23,7 +27,7 @@ namespace KakuroSolver.Utilities
         /// </remarks>
         public List<List<uint>> Values
         {
-            get { return values.ConvertAll(v => new List<uint>(v)); }
+            get => values.ConvertAll(v => new List<uint>(v));
             private set { values = value; }
         }
 
@@ -33,7 +37,7 @@ namespace KakuroSolver.Utilities
         private List<List<uint>> values;
 
         /// <summary>
-        /// Constructor.
+        /// Initializes a new instance of the <see cref="IntegerPartitions"/> class.
         /// </summary>
         /// <param name="total">The total value of the partition.</param>
         /// <param name="partitionLength">The length of the partition.</param>

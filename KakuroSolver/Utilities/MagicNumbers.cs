@@ -2,12 +2,16 @@
 
 namespace KakuroSolver.Utilities
 {
-    sealed class MagicNumbers
+    /// <summary>
+    /// Class containing 'magic numbers', these are known integer partitions
+    /// which only have a single set of valid number combinations.
+    /// </summary>
+    internal sealed class MagicNumbers
     {
         /// <summary>
         /// Collection of known magic numbers.
         /// </summary>
-        public static readonly List<IntegerPartitions> MagicNumberValues = new()
+        public static readonly List<IntegerPartitions> MagicNumberValues = new ()
         {
             new IntegerPartitions(3, 2, new List<List<uint>>() { new List<uint> { 1, 2, } }),
             new IntegerPartitions(4, 2, new List<List<uint>>() { new List<uint> { 1, 3, } }),
@@ -44,5 +48,9 @@ namespace KakuroSolver.Utilities
             new IntegerPartitions(44, 8, new List<List<uint>>() { new List<uint> { 2, 3, 4, 5, 6, 7, 8, 9, } }),
             new IntegerPartitions(45, 9, new List<List<uint>>() { new List<uint> { 1, 2, 3, 4, 5, 6, 7, 8, 9, } }),
         };
+
+        private MagicNumbers()
+        {
+        }
     }
 }

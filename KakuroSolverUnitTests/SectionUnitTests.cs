@@ -1,4 +1,5 @@
-﻿using KakuroSolver.Utilities;
+﻿using KakuroSolver.Cells;
+using KakuroSolver.Utilities;
 using NUnit.Framework;
 using System.Linq;
 

@@ -1,8 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using KakuroSolver.Cells;
+using System.Collections.Generic;
 
 namespace KakuroSolver
 {
-    interface ISection
+    /// <summary>
+    /// Interface for sections within a puzzle.
+    /// </summary>
+    internal interface ISection
     {
         /// <summary>
         /// Gets the clue value of this Section.

@@ -2,9 +2,18 @@
 
 namespace KakuroSolver
 {
-    class KakuroSolverException : Exception
+    /// <summary>
+    /// Exception class for any exception thrown within the project that
+    /// relates to the solving of a Kakuro puzzle.
+    /// </summary>
+    public class KakuroSolverException : Exception
     {
-        public KakuroSolverException(string message) : base(message)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="KakuroSolverException"/> class.
+        /// </summary>
+        /// <param name="message">The message associated with the exception.</param>
+        public KakuroSolverException(string message)
+            : base(message)
         {
         }
     }
