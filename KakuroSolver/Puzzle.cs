@@ -75,33 +75,27 @@ namespace KakuroSolver
         /// <returns>True if the puzzle was solved, otherwise false.</returns>
         public bool Solve()
         {
-            var solved = false;
-
             try
             {
-                var numCellsSolved = 0;
-                var updatedSolvedNumber = 0;
-
-                // Loop through each unsolved section to try and solve the puzzle.
-                // Will keep looping until either no new sections are solved, or all
-                // the sections are solved.
-                do
+                // Search for cells that only have one possible value as these
+                // can be solved straight away.
+                var solveableCells = puzzleCells.Where(pc => !pc.Solved && pc.PossibleValues.Count == 1)
+                                                .ToList();
+                while (solveableCells.Any())
                 {
-                    numCellsSolved = updatedSolvedNumber;
+                    solveableCells.ForEach(sc => sc.CellValue = sc.PossibleValues[0]);
 
-                    var unsolvedSections = Sections.FindAll(s => !s.IsSolved());
-
-                    Sections.FindAll(s => !s.IsSolved())
-                            .ForEach(s => s.Solve());
-
-                    updatedSolvedNumber = puzzleCells.Count(pc => pc.Solved);
+                    solveableCells = puzzleCells.Where(pc => !pc.Solved && pc.PossibleValues.Count == 1)
+                                                .ToList();
                 }
-                while (updatedSolvedNumber != numCellsSolved
-                       && numCellsSolved != puzzleCells.Count);
 
-                // Check that all the puzzle cells and sections are solved.
-                solved = numCellsSolved == puzzleCells.Count &&
-                         Sections.All(s => s.IsSolved());
+                // If there are still unsolved cells then we can recursively
+                // attempt to assign them values until we get a solution.
+                var unsolvedCells = puzzleCells.Where(pc => !pc.Solved);
+                if (unsolvedCells.Any())
+                {
+                    RecursivelySolvePuzzle(unsolvedCells.ToList()); ;
+                }
             }
             catch (KakuroSolverException ex)
             {
@@ -109,7 +103,8 @@ namespace KakuroSolver
                 Console.Error.WriteLine(ex.ToString());
             }
 
-            return solved;
+            return puzzleCells.All(pc => pc.Solved) &&
+                   Sections.All(s => s.IsSolved());
         }
 
         /// <summary>
@@ -136,6 +131,46 @@ namespace KakuroSolver
             sb.Append('|');
 
             return sb.ToString();
+        }
+
+        private bool RecursivelySolvePuzzle(List<PuzzleCell> puzzleCells)
+        {
+            // Reached the end of the recursion.
+            if (!puzzleCells.Any())
+            {
+                return true;
+            }
+
+            var success = false;
+
+            // Check if this recursion path has provided us with more
+            // possibilities to explore before continuing.
+            if (puzzleCells.All(pc => pc.PossibleValues.Any()))
+            {
+                // To save the amount of recursion required keep sorting
+                // the list by the number of possible values.
+                var orderedPuzzleCells = puzzleCells.OrderBy(pc => pc.PossibleValues.Count)
+                                                    .ToList();
+                var cell = orderedPuzzleCells[0];
+                orderedPuzzleCells.RemoveAt(0);
+
+                foreach (var possibleValue in cell.PossibleValues)
+                {
+                    // Set the cells value to this possible value so that future
+                    // cells will use this value when calculate their possible values.
+                    cell.CellValue = possibleValue;
+
+                    success = RecursivelySolvePuzzle(orderedPuzzleCells);
+                    if (success)
+                    {
+                        break;
+                    }
+
+                    cell.CellValue = 0u;
+                }
+            }
+
+            return success;
         }
     }
 }

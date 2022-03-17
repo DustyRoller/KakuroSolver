@@ -42,6 +42,7 @@ namespace KakuroSolver
         /// Gets and sets the Cell's column clue.
         /// </summary>
         public uint ColumnClue { get; set; }
+
         /// <summary>
         /// Gets and sets the Cell's row clue.
         /// </summary>
@@ -120,9 +121,11 @@ namespace KakuroSolver
         /// sections that this cell belongs to, and returns all of the common
         /// values into a single list.
         /// </remarks>
-        public List<uint> PossibleValues => ColumnSection.CalculateIntegerPartitions().SelectMany(ip => ip)
-                                                            .Intersect(RowSection.CalculateIntegerPartitions().SelectMany(ip => ip))
-                                                            .ToList();
+        public List<uint> PossibleValues => ColumnSection.CalculateIntegerPartitions()
+                                                         .SelectMany(ip => ip)
+                                                         .Intersect(RowSection.CalculateIntegerPartitions()
+                                                                              .SelectMany(ip => ip))
+                                                         .ToList();
 
         /// <summary>
         /// Gets and Sets the column section that this cell belongs to.
@@ -136,51 +139,6 @@ namespace KakuroSolver
 
         private uint cellValue = 0u;
 
-        public void Solve()
-        {
-            // Should this throw?
-            if (Solved)
-            {
-                return;
-            }
-
-            // Use the sections to calculate the possible numbers that this
-            // cell could be.
-            var columnPossibilities = ColumnSection.CalculateIntegerPartitions();
-            var rowPossibilities = RowSection.CalculateIntegerPartitions();
-
-            // If the possibilities from either section only contain a single
-            // value then that is our value.
-            if (rowPossibilities.Count == 1 && rowPossibilities[0].Count == 1)
-            {
-                CellValue = rowPossibilities[0][0];
-            }
-            else if (columnPossibilities.Count == 1 && columnPossibilities[0].Count == 1)
-            {
-                CellValue = columnPossibilities[0][0];
-            }
-            else if (columnPossibilities.Count == 1 && rowPossibilities.Count != 1)
-            {
-                FindUniqueValue(columnPossibilities[0], rowPossibilities);
-            }
-            else if (columnPossibilities.Count != 1 && rowPossibilities.Count == 1)
-            {
-                FindUniqueValue(rowPossibilities[0], columnPossibilities);
-            }
-            else if (columnPossibilities.Count == 1 && rowPossibilities.Count == 1)
-            {
-                // We only have one set of possibilities from both sections,
-                // so see if there is only one number in common between the
-                // two of them. If there is then thats our value.
-                var differences = columnPossibilities[0].Intersect(rowPossibilities[0]).ToList();
-                if (differences.Count == 1)
-                {
-                    // We have solved our cell.
-                    CellValue = differences[0];
-                }
-            }
-        }
-
         /// <summary>
         /// Get a string representation of the current state of the cell.
         /// </summary>
@@ -188,78 +146,6 @@ namespace KakuroSolver
         public override string ToString()
         {
             return Solved ? $"  {CellValue}  " : "  -  ";
-        }
-
-        private void FindUniqueValue(List<uint> singlePartitionValues, List<List<uint>> multiplePartitionValues)
-        {
-            // Remove any partition lists from the multiple partitions list if
-            // they don't contain the values from the single partition list.
-            var updatedMultiplePossibilities = new List<List<uint>>();
-            foreach (var possibilities in multiplePartitionValues)
-            {
-                var contains = false;
-                foreach (var val in singlePartitionValues)
-                {
-                    if (possibilities.Contains(val))
-                    {
-                        contains = true;
-                        break;
-                    }
-                }
-
-                if (contains)
-                {
-                    updatedMultiplePossibilities.Add(possibilities);
-                }
-            }
-
-            // If only one of the possible values exists in the updated lists
-            // then we have found our number.
-
-            // Keep track of what numbers occur.
-            var valueOccurances = new Dictionary<uint, uint>();
-            singlePartitionValues.ForEach(hp => valueOccurances.Add(hp, 0u));
-
-            foreach (var rowPoss in updatedMultiplePossibilities)
-            {
-                foreach (var val in singlePartitionValues)
-                {
-                    if (rowPoss.Contains(val))
-                    {
-                        valueOccurances[val]++;
-                    }
-                }
-            }
-
-            var uniqueValue = true;
-            var value = 0u;
-
-            foreach (var valueOccurance in valueOccurances.Keys)
-            {
-                if (value == 0u)
-                {
-                    // See if this value has occured.
-                    if (valueOccurances[valueOccurance] > 0)
-                    {
-                        value = valueOccurance;
-                    }
-                }
-                else
-                {
-                    if (valueOccurances[valueOccurance] > 0)
-                    {
-                        // No longer a unique value.
-                        uniqueValue = false;
-                        break;
-                    }
-                }
-            }
-
-            if (uniqueValue)
-            {
-                // We have solved our cell.
-                CellValue = value;
-            }
         }
     }
 }

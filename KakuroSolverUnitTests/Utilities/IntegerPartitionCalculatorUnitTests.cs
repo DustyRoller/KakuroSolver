@@ -22,6 +22,18 @@ namespace KakuroSolver.Utilities.UnitTests
         }
 
         [Test]
+        public void IntegerPartitionCalulator_CalculateDistinctIntegerPartitions_ReturnsExpectedValueForMagicNumber()
+        {
+            var sum = 17u;
+            var partitions = IntegerPartitionCalculator.CalculateDistinctIntegerPartitions(sum, 2u, 1u, 9u);
+
+            ValidatePartitions(partitions, sum);
+
+            Assert.AreEqual(1, partitions.Count);
+            CollectionAssert.AreEqual(new List<uint> { 8, 9, }, partitions[0]);
+        }
+
+        [Test]
         public void IntegerPartitionCalulator_CalculateDistinctIntegerPartitions_ReturnsExpectedValue()
         {
             var sum = 5u;
