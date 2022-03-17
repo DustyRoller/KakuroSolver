@@ -27,7 +27,7 @@ namespace KakuroSolver
         /// <returns>String representing the cell.</returns>
         public override string ToString()
         {
-            return "x";
+            return "  x  ";
         }
     }
 
@@ -56,12 +56,28 @@ namespace KakuroSolver
             var sb = new StringBuilder();
             if (ColumnClue != 0u)
             {
+                if (ColumnClue < 10)
+                {
+                    sb.Append(" ");
+                }
                 sb.Append(ColumnClue);
+            }
+            else
+            {
+                sb.Append("  ");
             }
             sb.Append('\\');
             if (RowClue != 0u)
             {
                 sb.Append(RowClue);
+                if (RowClue < 10)
+                {
+                    sb.Append(" ");
+                }
+            }
+            else
+            {
+                sb.Append("  ");
             }
 
             return sb.ToString();
@@ -171,7 +187,7 @@ namespace KakuroSolver
         /// <returns>String representing the current state of the cell.</returns>
         public override string ToString()
         {
-            return Solved ? CellValue.ToString() : "-";
+            return Solved ? $"  {CellValue}  " : "  -  ";
         }
 
         private void FindUniqueValue(List<uint> singlePartitionValues, List<List<uint>> multiplePartitionValues)

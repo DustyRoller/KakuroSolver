@@ -11,11 +11,11 @@ namespace KakuroSolver
     /// </summary>
     /// <remarks>
     /// Puzzle files will be text format using the following format:
-    ///   |x|17\|24\|x|x|
-    ///   |\16|-|-|20\|\|
-    ///   |\23|-|-|-|15\|
-    ///   |x|\23|-|-|-|
-    ///   |x|x|\14|-|-|
+    ///   |  x  |17\  |24\  |  x  |  x  |
+    ///   |  \16|  -  |  -  |20\  |  \  |
+    ///   |  \23|  -  |  -  |  -  |15\  |
+    ///   |  x  |  \23|  -  |  -  |  -  |
+    ///   |  x  |  x  |  \14|  -  |  -  |
     /// </remarks>
     class Parser
     {
@@ -82,7 +82,7 @@ namespace KakuroSolver
             //  'x' - for blank squares, which are ignored for now
             //  '-' - for puzzle squares that need to be solved
             //  'n \ n' - for clue squares.
-            if (cellStr == "-")
+            if (cellStr == "  -  ")
             {
                 cell = new PuzzleCell();
             }
@@ -90,7 +90,7 @@ namespace KakuroSolver
             {
                 cell = ParseClueCell(cellStr);
             }
-            else if (cellStr == "x")
+            else if (cellStr == "  x  ")
             {
                 cell = new BlankCell();
             }
@@ -114,13 +114,13 @@ namespace KakuroSolver
             var rowClue = 0u;
             var clues = clueCellStr.Split('\\');
 
-            if (clues[0] != string.Empty)
+            if (!string.IsNullOrWhiteSpace(clues[0]))
             {
-                columnClue = uint.Parse(clues[0]);
+                columnClue = uint.Parse(clues[0].Trim());
             }
-            if (clues[1] != string.Empty)
+            if (!string.IsNullOrWhiteSpace(clues[1]))
             {
-                rowClue = uint.Parse(clues[1]);
+                rowClue = uint.Parse(clues[1].Trim());
             }
 
             return new ClueCell()
