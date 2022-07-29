@@ -142,6 +142,11 @@ namespace KakuroSolver
         /// <returns>True if the all the PuzzleCells are solved, otherwise false.</returns>
         private bool RecursivelySolvePuzzle(List<PuzzleCell> puzzleCells)
         {
+            if (puzzleCells is null)
+            {
+                throw new ArgumentNullException(nameof(puzzleCells));
+            }
+
             // Reached the end of the recursion.
             if (!puzzleCells.Any())
             {
