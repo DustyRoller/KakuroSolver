@@ -134,6 +134,12 @@ namespace KakuroSolver
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Recursively solve the puzzle by working our way through all of the
+        /// given PuzzleCell's possible values until we get to a solved puzzle.
+        /// </summary>
+        /// <param name="puzzleCells">The PuzzleCells to solve.</param>
+        /// <returns>True if the all the PuzzleCells are solved, otherwise false.</returns>
         private bool RecursivelySolvePuzzle(List<PuzzleCell> puzzleCells)
         {
             // Reached the end of the recursion.
