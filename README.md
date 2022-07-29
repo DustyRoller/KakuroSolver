@@ -11,6 +11,6 @@ Puzzles to be solved should be in .txt files in the following format:
 |  x  |  \23|  -  |  -  |  -  |
 |  x  |  x  |  \14|  -  |  -  |
 </pre>
-The run the solver use the following command:
+To run the solver use the following command:
  
  KakuroSolver.exe [Path to puzzle file]

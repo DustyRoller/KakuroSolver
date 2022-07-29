@@ -47,7 +47,6 @@ namespace KakuroSolver
 
                 if (lineWidth != puzzle.Width)
                 {
-                    // Create parser exception for this.
                     throw new ParserException($"Mismatch in row width on row {i + 1}.");
                 }
             }
@@ -199,7 +198,7 @@ namespace KakuroSolver
         /// <param name="puzzle">The Puzzle to parse the sections from.</param>
         private static void ParseSections(Puzzle puzzle)
         {
-            // Need to generate segments thats can be solved.
+            // Need to generate segments that can be solved.
             for (var i = 0; i < puzzle.Cells.Count; ++i)
             {
                 if (puzzle.Cells[i] is ClueCell clueCell)
